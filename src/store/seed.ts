@@ -23,9 +23,9 @@ const seedPnl = (): PnlPoint[] => {
 
 export const buildSeed = () => {
   const groups: Group[] = [
-    { id: 'g-launch', name: 'Launch Squad', color: '#c8f560' },
-    { id: 'g-snipe', name: 'Volume', color: '#7cc4ff' },
-    { id: 'g-cold', name: 'Cold', color: '#ffb547' },
+    { id: 'g-launch', name: 'Launch Squad', color: '#ededed' },
+    { id: 'g-snipe', name: 'Volume', color: '#9fb3c8' },
+    { id: 'g-cold', name: 'Cold', color: '#c8b79f' },
   ]
   const mk = (label: string, groupId: string | null, balance: number): Wallet => ({
     id: uid(), address: fakeAddress(), label, groupId, balance, createdAt: Date.now() - 86400_000 * 4,
@@ -39,9 +39,9 @@ export const buildSeed = () => {
   ]
 
   const tracked: Tracked[] = [
-    { label: 'Whale Alpha', emoji: '🐋', color: '#7cc4ff', pnl: 48210, winRate: 71, trades: 312, balance: 1840.2 },
-    { label: 'Early Bird', emoji: '🦅', color: '#c8f560', pnl: 12904, winRate: 64, trades: 891, balance: 211.4 },
-    { label: 'Degen Dave', emoji: '🎲', color: '#ff5c6c', pnl: -3420, winRate: 38, trades: 1544, balance: 18.9 },
+    { label: 'Whale Alpha', emoji: '🐋', color: '#9fb3c8', pnl: 48210, winRate: 71, trades: 312, balance: 1840.2 },
+    { label: 'Early Bird', emoji: '🦅', color: '#ededed', pnl: 12904, winRate: 64, trades: 891, balance: 211.4 },
+    { label: 'Degen Dave', emoji: '🎲', color: '#c49f9f', pnl: -3420, winRate: 38, trades: 1544, balance: 18.9 },
   ].map((t, i) => ({
     ...t,
     id: uid(),

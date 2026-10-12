@@ -28,13 +28,13 @@ function Stepper({ step }: { step: number }) {
     <div className="flex items-center gap-3">
       {STEPS.map((s, i) => (
         <div key={s} className="flex items-center gap-3">
-          <div className={cx('flex items-center gap-2 text-sm', i === step ? 'text-ink-100' : i < step ? 'text-lime' : 'text-ink-500')}>
-            <span className={cx('w-6 h-6 rounded-full grid place-items-center text-[11px] font-semibold border', i === step ? 'border-lime text-lime' : i < step ? 'bg-lime border-lime text-ink-950' : 'border-ink-600')}>
+          <div className={cx('flex items-center gap-2 text-sm', i === step ? 'text-ink-100' : i < step ? 'text-accent' : 'text-ink-500')}>
+            <span className={cx('w-6 h-6 rounded-full grid place-items-center text-[11px] font-semibold border', i === step ? 'border-accent text-accent' : i < step ? 'bg-accent border-accent text-ink-950' : 'border-ink-600')}>
               {i < step ? <Check size={12} strokeWidth={3} /> : i + 1}
             </span>
             {s}
           </div>
-          {i < STEPS.length - 1 && <div className={cx('w-10 h-px', i < step ? 'bg-lime/60' : 'bg-ink-700')} />}
+          {i < STEPS.length - 1 && <div className={cx('w-10 h-px', i < step ? 'bg-accent/60' : 'bg-ink-700')} />}
         </div>
       ))}
     </div>
@@ -132,16 +132,16 @@ export default function NewLaunch() {
                   disabled={!c.available}
                   onClick={() => setChain(c.id)}
                   className={cx(
-                    'relative text-left rounded-2xl border p-4 transition',
+                    'relative text-left rounded-lg border p-4 transition',
                     !c.available && 'opacity-45 cursor-not-allowed border-ink-800 bg-ink-900',
-                    c.available && chain === c.id && 'border-lime/70 bg-lime/[0.06] shadow-glow',
+                    c.available && chain === c.id && 'border-accent/70 bg-accent/[0.06]',
                     c.available && chain !== c.id && 'border-ink-700 bg-ink-900 hover:border-ink-500',
                   )}
                 >
                   <div className="flex items-center justify-between">
                     <div className="w-10 h-10 rounded-xl bg-ink-800 grid place-items-center"><ChainGlyph id={c.id} /></div>
                     {c.available ? (
-                      chain === c.id && <span className="w-5 h-5 rounded-full bg-lime grid place-items-center"><Check size={12} strokeWidth={3} className="text-ink-950" /></span>
+                      chain === c.id && <span className="w-5 h-5 rounded-full bg-accent grid place-items-center"><Check size={12} strokeWidth={3} className="text-ink-950" /></span>
                     ) : (
                       <span className="chip bg-ink-800 text-ink-400"><Lock size={10} /> Unavailable</span>
                     )}
@@ -165,7 +165,7 @@ export default function NewLaunch() {
                   className={cx(
                     'flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition',
                     !p.available && 'opacity-45 cursor-not-allowed border-ink-800',
-                    p.available && pad === p.id && 'border-lime/70 bg-lime/[0.06]',
+                    p.available && pad === p.id && 'border-accent/70 bg-accent/[0.06]',
                     p.available && pad !== p.id && 'border-ink-700 hover:border-ink-500',
                   )}
                 >
@@ -175,7 +175,7 @@ export default function NewLaunch() {
                     <div className="text-[11px] text-ink-500">{p.available ? 'Bonding curve · 1B supply · graduates at ~85 SOL' : 'Not supported yet'}</div>
                   </div>
                   {p.available ? (
-                    <span className={cx('w-4 h-4 rounded-full border-2', pad === p.id ? 'border-lime bg-lime' : 'border-ink-500')} />
+                    <span className={cx('w-4 h-4 rounded-full border-2', pad === p.id ? 'border-accent bg-accent' : 'border-ink-500')} />
                   ) : (
                     <span className="chip bg-ink-800 text-ink-400">Unavailable</span>
                   )}
@@ -217,7 +217,7 @@ export default function NewLaunch() {
                     onClick={() => fileRef.current?.click()}
                     className={cx(
                       'cursor-pointer rounded-xl border border-dashed p-5 flex items-center gap-5 transition',
-                      drag ? 'border-lime bg-lime/[0.05]' : 'border-ink-600 bg-ink-900 hover:border-ink-500',
+                      drag ? 'border-accent bg-accent/[0.05]' : 'border-ink-600 bg-ink-900 hover:border-ink-500',
                     )}
                   >
                     <div className="w-20 h-20 rounded-xl bg-ink-800 grid place-items-center overflow-hidden shrink-0">
@@ -239,7 +239,7 @@ export default function NewLaunch() {
                       { icon: <Send size={14} />, v: telegram, s: setTelegram, p: 't.me/yourtoken' },
                       { icon: <Globe size={14} />, v: website, s: setWebsite, p: 'yourtoken.xyz' },
                     ].map((l, i) => (
-                      <div key={i} className="flex items-center rounded-lg border border-ink-700 bg-ink-850 focus-within:border-lime/60">
+                      <div key={i} className="flex items-center rounded-lg border border-ink-700 bg-ink-850 focus-within:border-accent/60">
                         <span className="w-10 grid place-items-center text-ink-400 border-r border-ink-700 self-stretch">{l.icon}</span>
                         <input className="flex-1 bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-ink-500" value={l.v} onChange={(e) => l.s(e.target.value)} placeholder={l.p} />
                       </div>
@@ -277,8 +277,8 @@ export default function NewLaunch() {
               <h1 className="text-3xl font-semibold tracking-tight">Who buys at launch?</h1>
               <p className="text-ink-400 mt-2">Set how much of the supply your dev and holder wallets take in the first block. You decide the numbers.</p>
 
-              <div className="mt-8 rounded-2xl border border-ink-750 bg-ink-900 p-5">
-                <div className="flex items-center gap-2 font-medium"><ChefHat size={16} className="text-warn" /> Developer</div>
+              <div className="mt-8 rounded-lg border border-ink-750 bg-ink-900 p-5">
+                <div className="flex items-center gap-2 font-medium"><ChefHat size={15} className="text-ink-400" /> Developer</div>
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <Field label="Dev wallet">
                     <select className="input" value={devWallet} onChange={(e) => { setDevWallet(e.target.value); setHolderIds((h) => h.filter((x) => x !== e.target.value)) }}>
@@ -295,9 +295,9 @@ export default function NewLaunch() {
                 </div>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-ink-750 bg-ink-900 p-5">
+              <div className="mt-4 rounded-lg border border-ink-750 bg-ink-900 p-5">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 font-medium"><Users size={16} className="text-[#7cc4ff]" /> Holders</div>
+                  <div className="flex items-center gap-2 font-medium"><Users size={15} className="text-ink-400" /> Holders</div>
                   <Segmented
                     size="sm"
                     value={split}

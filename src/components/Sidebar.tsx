@@ -24,13 +24,13 @@ export function Sidebar() {
   const list = launches.filter((l) => `${l.name} ${l.symbol}`.toLowerCase().includes(q.toLowerCase()))
 
   return (
-    <aside className="w-[264px] shrink-0 h-full flex flex-col border-r border-ink-750 bg-ink-900/60">
+    <aside className="w-[264px] shrink-0 h-full flex flex-col border-r border-ink-750 bg-ink-950">
       <div className="px-4 h-16 flex items-center border-b border-ink-750">
         <Logo />
       </div>
 
       <div className="p-3">
-        <button className="btn-primary w-full py-2.5 shadow-glow" onClick={() => nav('/launch/new')}>
+        <button className="btn-primary w-full py-2.5" onClick={() => nav('/launch/new')}>
           <Rocket size={16} /> New Launch
         </button>
       </div>
@@ -82,7 +82,7 @@ export function Sidebar() {
                 {l.status === 'live' ? fmtUsd(mcapSol(l.curve) * solPrice) + ' mc' : l.name}
               </div>
             </div>
-            <span className={cx('chip', l.status === 'live' ? 'bg-up/10 text-up' : 'bg-ink-750 text-ink-300')}>
+            <span className={cx('chip', l.status === 'live' ? 'border border-ink-700 text-ink-200' : 'border border-dashed border-ink-700 text-ink-400')}>
               {l.status === 'live' && <span className="w-1.5 h-1.5 rounded-full bg-up animate-pulse" />}
               {l.status === 'live' ? 'Live' : 'Draft'}
             </span>

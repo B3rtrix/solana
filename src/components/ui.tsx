@@ -25,8 +25,8 @@ export function Modal({
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className={cx('relative w-full panel bg-ink-900 shadow-2xl animate-pop flex flex-col max-h-[90vh]', width)}>
+      <div className="absolute inset-0 bg-black/75" onClick={onClose} />
+      <div className={cx('relative w-full panel bg-ink-900 rounded-xl shadow-2xl shadow-black animate-pop flex flex-col max-h-[90vh]', width)}>
         <div className="flex items-start justify-between gap-4 px-5 pt-5 pb-4 border-b border-ink-750">
           <div>
             <h3 className="text-base font-semibold">{title}</h3>
@@ -64,14 +64,8 @@ export function CopyAddr({ address, head = 4, tail = 4, className }: { address: 
 
 export function SolMark({ size = 14, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="solg" x1="0" x2="1" y1="1" y2="0">
-          <stop offset="0" stopColor="#9b7bff" />
-          <stop offset="1" stopColor="#3ee6b0" />
-        </linearGradient>
-      </defs>
-      <path fill="url(#solg)" d="M5 16.5h13.5l-2.5 3H2.5zM5 4.5h13.5l-2.5 3H2.5zM16 10.5H2.5l2.5 3h13.5z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" className={cx('text-ink-400', className)} aria-hidden>
+      <path fill="currentColor" d="M5 16.5h13.5l-2.5 3H2.5zM5 4.5h13.5l-2.5 3H2.5zM16 10.5H2.5l2.5 3h13.5z" />
     </svg>
   )
 }
@@ -94,15 +88,15 @@ export function Segmented<T extends string>({
   size?: 'sm' | 'md'
 }) {
   return (
-    <div className="inline-flex rounded-lg bg-ink-850 border border-ink-750 p-0.5">
+    <div className="inline-flex rounded-full bg-ink-900 border border-ink-750 p-0.5">
       {options.map((o) => (
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
           className={cx(
-            'rounded-md font-medium transition',
+            'rounded-full font-medium transition',
             size === 'sm' ? 'px-2 py-1 text-[11px]' : 'px-3 py-1.5 text-xs',
-            value === o.value ? 'bg-ink-700 text-ink-100' : 'text-ink-400 hover:text-ink-200',
+            value === o.value ? 'bg-ink-100 text-ink-950' : 'text-ink-400 hover:text-ink-200',
           )}
         >
           {o.label}
@@ -114,11 +108,11 @@ export function Segmented<T extends string>({
 
 export function TokenAvatar({ image, symbol, size = 40, className }: { image?: string; symbol: string; size?: number; className?: string }) {
   return image ? (
-    <img src={image} alt="" style={{ width: size, height: size }} className={cx('rounded-lg object-cover bg-ink-800', className)} />
+    <img src={image} alt="" style={{ width: size, height: size }} className={cx('rounded-md object-cover bg-ink-800', className)} />
   ) : (
     <div
       style={{ width: size, height: size, fontSize: size * 0.38 }}
-      className={cx('rounded-lg grid place-items-center font-bold bg-gradient-to-br from-lime/30 to-ink-700 text-lime', className)}
+      className={cx('rounded-md grid place-items-center font-semibold bg-ink-800 border border-ink-700 text-ink-200', className)}
     >
       {symbol.slice(0, 2).toUpperCase() || '?'}
     </div>
@@ -128,7 +122,7 @@ export function TokenAvatar({ image, symbol, size = 40, className }: { image?: s
 export function Empty({ icon, title, text, action }: { icon: ReactNode; title: string; text: string; action?: ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center text-center py-14 px-6">
-      <div className="w-12 h-12 rounded-xl bg-ink-800 border border-ink-700 grid place-items-center text-ink-300 mb-4">{icon}</div>
+      <div className="w-12 h-12 rounded-lg bg-ink-900 border border-dashed border-ink-600 grid place-items-center text-ink-300 mb-4">{icon}</div>
       <div className="font-medium">{title}</div>
       <p className="text-sm text-ink-400 mt-1 max-w-sm">{text}</p>
       {action && <div className="mt-5">{action}</div>}
@@ -162,4 +156,5 @@ export function PageHeader({ title, subtitle, right }: { title: ReactNode; subti
   )
 }
 
-export const GROUP_COLORS = ['#c8f560', '#7cc4ff', '#ffb547', '#ff7ab6', '#b892ff', '#3ddc97', '#ff5c6c']
+/** Muted tones — enough to tell groups apart without turning the UI into a rainbow. */
+export const GROUP_COLORS = ['#ededed', '#9fb3c8', '#c8b79f', '#b8a3c4', '#9fc4b3', '#c49f9f', '#8a8a8a']

@@ -45,7 +45,7 @@ export default function App() {
   return (
     <div className="h-full flex overflow-hidden">
       <Sidebar />
-      <main className="flex-1 min-w-0 h-full overflow-y-auto">
+      <main className="flex-1 min-w-0 h-full overflow-y-auto grid-bg">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/tracker" element={<Tracker />} />

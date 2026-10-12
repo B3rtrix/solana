@@ -20,7 +20,7 @@ export default function LaunchPage() {
   if (!launch)
     return (
       <div className="p-16 text-center text-ink-400">
-        Launch not found. <Link to="/" className="text-lime hover:underline">Back to dashboard</Link>
+        Launch not found. <Link to="/" className="text-accent hover:underline">Back to dashboard</Link>
       </div>
     )
   return launch.status === 'draft' ? <DraftView l={launch} key={launch.id} /> : <LiveView l={launch} key={launch.id} />
@@ -64,7 +64,7 @@ function HeadStat({ label, children, className }: { label: string; children: Rea
 }
 
 const RoleIcon = ({ role }: { role: Position['role'] }) =>
-  role === 'dev' ? <ChefHat size={14} className="text-warn" /> : <User size={14} className="text-[#7cc4ff]" />
+  role === 'dev' ? <ChefHat size={14} className="text-ink-200" /> : <User size={14} className="text-ink-500" />
 
 /* ------------------------------------------------------------------ */
 /* Draft: fund wallets, then launch                                     */
@@ -133,7 +133,7 @@ function DraftView({ l }: { l: Launch }) {
       <div className="grid md:grid-cols-3 border-b border-ink-750">
         <div className="p-5 border-r border-ink-750">
           <div className="label">Funder</div>
-          <div className="mt-3 flex items-center justify-between rounded-lg bg-lime/[0.06] border border-lime/25 px-3 py-2.5">
+          <div className="mt-3 flex items-center justify-between rounded-lg bg-accent/[0.06] border border-accent/25 px-3 py-2.5">
             <CopyAddr address={funder.address} />
             <span className="text-sm"><Sol v={funder.balance.toFixed(2)} /> <span className="text-ink-500">/ {totalNeed.toFixed(2)} needed</span></span>
           </div>
@@ -195,7 +195,7 @@ function DraftView({ l }: { l: Launch }) {
                     <div className="flex items-center gap-2.5">
                       <RoleIcon role={p.role} />
                       <div>
-                        <div className="font-medium">{w?.label ?? 'Missing wallet'} {p.role === 'dev' && <span className="chip bg-warn/10 text-warn ml-1">DEV</span>}</div>
+                        <div className="font-medium">{w?.label ?? 'Missing wallet'} {p.role === 'dev' && <span className="chip border border-ink-600 text-ink-300 font-mono ml-1">DEV</span>}</div>
                         {w && <CopyAddr address={w.address} className="text-[11px]" />}
                       </div>
                     </div>
@@ -220,7 +220,7 @@ function DraftView({ l }: { l: Launch }) {
                         <div className="flex justify-between text-[11px] mb-1">
                           <span className="num text-ink-300">{have.toFixed(3)} / {need.toFixed(3)}</span>
                           {distributing === p.walletId ? (
-                            <span className="text-lime flex items-center gap-1"><Loader2 size={11} className="animate-spin" /> sending</span>
+                            <span className="text-accent flex items-center gap-1"><Loader2 size={11} className="animate-spin" /> sending</span>
                           ) : ready ? (
                             <span className="text-up">funded</span>
                           ) : (
@@ -228,7 +228,7 @@ function DraftView({ l }: { l: Launch }) {
                           )}
                         </div>
                         <div className="h-1.5 rounded-full bg-ink-750 overflow-hidden">
-                          <div className={cx('h-full rounded-full transition-all duration-300', ready ? 'bg-up' : 'bg-warn')} style={{ width: `${Math.min(100, (have / need) * 100)}%` }} />
+                          <div className={cx('h-full rounded-full transition-all duration-300', ready ? 'bg-ink-100' : 'bg-ink-500')} style={{ width: `${Math.min(100, (have / need) * 100)}%` }} />
                         </div>
                       </div>
                     </div>
@@ -401,7 +401,7 @@ function LiveView({ l }: { l: Launch }) {
             </button>
             <div className="ml-auto flex items-center gap-2 text-[11px] text-ink-400">
               Bonding curve
-              <div className="w-28 h-1.5 rounded-full bg-ink-750 overflow-hidden"><div className="h-full bg-lime" style={{ width: `${grad}%` }} /></div>
+              <div className="w-28 h-1.5 rounded-full bg-ink-750 overflow-hidden"><div className="h-full bg-accent" style={{ width: `${grad}%` }} /></div>
               <span className="num text-ink-200">{grad.toFixed(1)}%</span>
             </div>
           </div>
@@ -451,11 +451,11 @@ function LiveView({ l }: { l: Launch }) {
                           <td className="pr-4">
                             <div className="flex justify-end gap-1">
                               {[0.1, 0.5].map((v) => (
-                                <button key={v} onClick={() => trade(l.id, [p.walletId], 'buy', v)} className="chip bg-up/10 text-up hover:bg-up/20 px-2 py-1">{v}</button>
+                                <button key={v} onClick={() => trade(l.id, [p.walletId], 'buy', v)} className="chip border border-ink-700 text-ink-200 hover:bg-ink-800 px-2 py-1">{v}</button>
                               ))}
                               <span className="w-2" />
                               {[25, 50, 100].map((v) => (
-                                <button key={v} onClick={() => trade(l.id, [p.walletId], 'sell', v)} disabled={p.tokens < 1} className="chip bg-down/10 text-down hover:bg-down/20 px-2 py-1 disabled:opacity-30">{v}%</button>
+                                <button key={v} onClick={() => trade(l.id, [p.walletId], 'sell', v)} disabled={p.tokens < 1} className="chip border border-down/30 text-down hover:bg-down/10 px-2 py-1 disabled:opacity-30">{v}%</button>
                               ))}
                             </div>
                           </td>
@@ -490,14 +490,14 @@ function LiveView({ l }: { l: Launch }) {
                   </thead>
                   <tbody>
                     {l.trades.slice(0, 80).map((t) => (
-                      <tr key={t.id} className={cx('border-t border-ink-800', t.walletId && 'bg-lime/[0.03]')}>
+                      <tr key={t.id} className={cx('border-t border-ink-800', t.walletId && 'bg-accent/[0.03]')}>
                         <td className="pl-4 py-2 text-xs text-ink-400">{timeAgo(t.ts)}</td>
                         <td className={t.side === 'buy' ? 'text-up' : 'text-down'}>{t.side === 'buy' ? 'Buy' : 'Sell'}</td>
                         <td className="text-right"><Sol v={t.sol.toFixed(3)} className="justify-end" /></td>
                         <td className="text-right num text-ink-300">{fmtTokens(t.tokens)}</td>
                         <td className="text-right num text-ink-300">{fmtUsd(t.mcapUsd)}</td>
                         <td className="text-right pr-4 font-mono text-xs">
-                          {t.walletId ? <span className="text-lime">{wById[t.walletId]?.label ?? 'You'}</span> : <span className="text-ink-400">{shortAddr(t.trader)}</span>}
+                          {t.walletId ? <span className="text-accent">{wById[t.walletId]?.label ?? 'You'}</span> : <span className="text-ink-400">{shortAddr(t.trader)}</span>}
                         </td>
                       </tr>
                     ))}
@@ -512,12 +512,12 @@ function LiveView({ l }: { l: Launch }) {
                     return (
                       <div key={h.key} className="flex items-center gap-3 px-4 py-2 text-sm">
                         <span className="w-6 text-ink-500 num text-xs">{i + 1}</span>
-                        <span className={cx('flex-1 flex items-center gap-2', h.mine && 'text-lime')}>
+                        <span className={cx('flex-1 flex items-center gap-2', h.mine && 'text-accent')}>
                           {h.role && <RoleIcon role={h.role} />}
                           {h.label}
                           {h.key === 'curve' && <span className="chip bg-ink-800 text-ink-400">pool</span>}
                         </span>
-                        <div className="w-40 h-1.5 rounded-full bg-ink-800 overflow-hidden"><div className={cx('h-full', h.mine ? 'bg-lime' : 'bg-ink-500')} style={{ width: `${Math.min(100, pct)}%` }} /></div>
+                        <div className="w-40 h-1.5 rounded-full bg-ink-800 overflow-hidden"><div className={cx('h-full', h.mine ? 'bg-accent' : 'bg-ink-500')} style={{ width: `${Math.min(100, pct)}%` }} /></div>
                         <span className="w-16 text-right num">{pct.toFixed(2)}%</span>
                       </div>
                     )
@@ -531,9 +531,9 @@ function LiveView({ l }: { l: Launch }) {
         {/* right: trade panel */}
         <div className="overflow-y-auto">
           <div className="p-4 space-y-4">
-            <div className="grid grid-cols-2 rounded-lg bg-ink-850 border border-ink-750 p-0.5">
+            <div className="grid grid-cols-2 rounded-full bg-ink-900 border border-ink-750 p-0.5">
               {(['buy', 'sell'] as const).map((s) => (
-                <button key={s} onClick={() => setSide(s)} className={cx('py-2 rounded-md text-sm font-medium capitalize transition', side === s ? (s === 'buy' ? 'bg-up/15 text-up' : 'bg-down/15 text-down') : 'text-ink-400')}>{s}</button>
+                <button key={s} onClick={() => setSide(s)} className={cx('py-2 rounded-full text-sm font-medium capitalize transition', side === s ? (s === 'buy' ? 'bg-ink-100 text-ink-950' : 'bg-down text-white') : 'text-ink-400')}>{s}</button>
               ))}
             </div>
 
@@ -541,14 +541,14 @@ function LiveView({ l }: { l: Launch }) {
               <div className="label mb-2">Wallets</div>
               <div className="grid grid-cols-4 gap-1">
                 {([['all', 'All'], ['dev', 'Dev'], ['holders', 'Holders'], ['custom', 'Pick']] as const).map(([k, label]) => (
-                  <button key={k} onClick={() => setScope(k)} className={cx('py-1.5 text-xs rounded-md border', scope === k ? 'border-lime/60 text-lime bg-lime/[0.06]' : 'border-ink-750 text-ink-400 hover:text-ink-200')}>{label}</button>
+                  <button key={k} onClick={() => setScope(k)} className={cx('py-1.5 text-xs rounded-md border', scope === k ? 'border-accent/60 text-accent bg-accent/[0.06]' : 'border-ink-750 text-ink-400 hover:text-ink-200')}>{label}</button>
                 ))}
               </div>
               {scope === 'custom' && (
                 <div className="mt-2 max-h-40 overflow-y-auto rounded-lg border border-ink-750 divide-y divide-ink-800">
                   {l.positions.map((p) => (
                     <label key={p.walletId} className="flex items-center gap-2 px-2.5 py-1.5 text-xs cursor-pointer hover:bg-ink-850">
-                      <input type="checkbox" className="accent-lime" checked={custom.includes(p.walletId)} onChange={() => setCustom((c) => (c.includes(p.walletId) ? c.filter((x) => x !== p.walletId) : [...c, p.walletId]))} />
+                      <input type="checkbox" className="accent-accent" checked={custom.includes(p.walletId)} onChange={() => setCustom((c) => (c.includes(p.walletId) ? c.filter((x) => x !== p.walletId) : [...c, p.walletId]))} />
                       <RoleIcon role={p.role} /> <span className="flex-1">{wById[p.walletId]?.label}</span>
                       <span className="num text-ink-500">{((p.tokens / TOTAL_SUPPLY) * 100).toFixed(2)}%</span>
                     </label>
@@ -567,7 +567,7 @@ function LiveView({ l }: { l: Launch }) {
                 </div>
                 <div className="grid grid-cols-5 gap-1 mt-2">
                   {[0.05, 0.1, 0.25, 0.5, 1].map((v) => (
-                    <button key={v} onClick={() => setBuyAmt(String(v))} className={cx('chip justify-center py-1.5', +buyAmt === v ? 'bg-up/15 text-up' : 'bg-ink-800 text-ink-300 hover:bg-ink-750')}>{v}</button>
+                    <button key={v} onClick={() => setBuyAmt(String(v))} className={cx('chip justify-center py-1.5', +buyAmt === v ? 'bg-ink-100 text-ink-950' : 'bg-ink-800 text-ink-300 hover:bg-ink-750')}>{v}</button>
                   ))}
                 </div>
               </div>
@@ -580,13 +580,13 @@ function LiveView({ l }: { l: Launch }) {
                 </div>
                 <div className="grid grid-cols-5 gap-1 mt-2">
                   {[10, 25, 50, 75, 100].map((v) => (
-                    <button key={v} onClick={() => setSellPct(String(v))} className={cx('chip justify-center py-1.5', +sellPct === v ? 'bg-down/15 text-down' : 'bg-ink-800 text-ink-300 hover:bg-ink-750')}>{v === 100 ? 'MAX' : `${v}%`}</button>
+                    <button key={v} onClick={() => setSellPct(String(v))} className={cx('chip justify-center py-1.5', +sellPct === v ? 'bg-down text-white' : 'bg-ink-800 text-ink-300 hover:bg-ink-750')}>{v === 100 ? 'MAX' : `${v}%`}</button>
                   ))}
                 </div>
               </div>
             )}
 
-            <button onClick={execute} className={cx('btn w-full py-2.5 font-semibold', side === 'buy' ? 'bg-up text-ink-950 hover:brightness-110' : 'bg-down text-ink-950 hover:brightness-110')}>
+            <button onClick={execute} className={cx('btn w-full py-2.5 font-semibold', side === 'buy' ? 'bg-ink-100 text-ink-950 hover:bg-white' : 'bg-down text-white hover:brightness-110')}>
               {side === 'buy' ? `Buy with ${scopeIds(scope).length} wallets` : `Sell ${sellPct}% from ${scopeIds(scope).length} wallets`}
             </button>
 
@@ -627,7 +627,7 @@ function LiveView({ l }: { l: Launch }) {
         footer={
           <>
             <button className="btn-ghost" onClick={() => setNuke(false)}>Cancel</button>
-            <button className="btn bg-down text-ink-950 font-semibold" onClick={() => { trade(l.id, l.positions.map((p) => p.walletId), 'sell', 100); setNuke(false) }}>
+            <button className="btn bg-down text-white font-semibold" onClick={() => { trade(l.id, l.positions.map((p) => p.walletId), 'sell', 100); setNuke(false) }}>
               <Bomb size={16} /> Sell all
             </button>
           </>

@@ -166,9 +166,9 @@ export default function Wallets() {
       <div className="grid lg:grid-cols-[220px_1fr] gap-4">
         <div className="space-y-1">
           {[
-            { id: 'all', name: 'All wallets', color: '#9aa2a8', n: wallets.length },
+            { id: 'all', name: 'All wallets', color: '#8a8a8a', n: wallets.length },
             ...groups.map((g) => ({ ...g, n: wallets.filter((w) => w.groupId === g.id).length })),
-            { id: 'none', name: 'Ungrouped', color: '#4a5157', n: wallets.filter((w) => !w.groupId).length },
+            { id: 'none', name: 'Ungrouped', color: '#444', n: wallets.filter((w) => !w.groupId).length },
           ].map((g) => (
             <button
               key={g.id}
@@ -226,7 +226,7 @@ export default function Wallets() {
               <thead>
                 <tr className="text-left text-xs text-ink-500">
                   <th className="w-10 pl-4 py-2.5">
-                    <input type="checkbox" className="accent-lime" checked={allSel} onChange={() => setSel(allSel ? [] : list.map((w) => w.id))} />
+                    <input type="checkbox" className="accent-accent" checked={allSel} onChange={() => setSel(allSel ? [] : list.map((w) => w.id))} />
                   </th>
                   <th className="font-normal py-2.5">Wallet</th>
                   <th className="font-normal py-2.5">Address</th>
@@ -239,8 +239,8 @@ export default function Wallets() {
                 {list.map((w) => {
                   const g = groupOf(w.groupId)
                   return (
-                    <tr key={w.id} className={cx('border-t border-ink-800 hover:bg-ink-850', sel.includes(w.id) && 'bg-lime/[0.04]')}>
-                      <td className="pl-4"><input type="checkbox" className="accent-lime" checked={sel.includes(w.id)} onChange={() => toggle(w.id)} /></td>
+                    <tr key={w.id} className={cx('border-t border-ink-800 hover:bg-ink-850', sel.includes(w.id) && 'bg-accent/[0.04]')}>
+                      <td className="pl-4"><input type="checkbox" className="accent-accent" checked={sel.includes(w.id)} onChange={() => toggle(w.id)} /></td>
                       <td className="py-3">
                         {renaming?.id === w.id ? (
                           <input

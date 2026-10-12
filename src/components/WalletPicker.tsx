@@ -27,7 +27,7 @@ export function WalletPicker({
   const sections = useMemo(() => {
     const avail = wallets.filter((w) => !exclude.includes(w.id) && `${w.label} ${w.address}`.toLowerCase().includes(q.toLowerCase()))
     const out = groups.map((g) => ({ id: g.id, name: g.name, color: g.color, items: avail.filter((w) => w.groupId === g.id) }))
-    out.push({ id: 'none', name: 'Ungrouped', color: '#4a5157', items: avail.filter((w) => !w.groupId) })
+    out.push({ id: 'none', name: 'Ungrouped', color: '#444', items: avail.filter((w) => !w.groupId) })
     return out.filter((s) => s.items.length)
   }, [wallets, groups, q, exclude])
 
@@ -59,7 +59,7 @@ export function WalletPicker({
       {!sections.length && (
         <div className="text-center py-10 text-sm text-ink-400">
           No wallets available.{' '}
-          <button className="text-lime hover:underline" onClick={() => { onClose(); nav('/wallets') }}>Go to My Wallets</button>
+          <button className="text-accent hover:underline" onClick={() => { onClose(); nav('/wallets') }}>Go to My Wallets</button>
         </div>
       )}
 
@@ -74,10 +74,10 @@ export function WalletPicker({
               <div className="flex items-center gap-3 px-3 py-2.5 bg-ink-850">
                 <button
                   onClick={() => setSel((cur) => (all ? cur.filter((x) => !ids.includes(x)) : [...new Set([...cur, ...ids])]))}
-                  className={cx('w-4 h-4 rounded border grid place-items-center', all ? 'bg-lime border-lime' : some ? 'border-lime' : 'border-ink-500')}
+                  className={cx('w-4 h-4 rounded border grid place-items-center', all ? 'bg-accent border-accent' : some ? 'border-accent' : 'border-ink-500')}
                 >
                   {all && <Check size={11} className="text-ink-950" strokeWidth={3} />}
-                  {!all && some && <span className="w-2 h-0.5 bg-lime" />}
+                  {!all && some && <span className="w-2 h-0.5 bg-accent" />}
                 </button>
                 <span className="w-2 h-2 rounded-full" style={{ background: s.color }} />
                 <span className="text-sm font-medium flex-1">{s.name}</span>
@@ -89,8 +89,8 @@ export function WalletPicker({
               {!isCollapsed && (
                 <div className="divide-y divide-ink-800">
                   {s.items.map((w) => (
-                    <button key={w.id} onClick={() => toggle(w.id)} className={cx('w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-ink-850', sel.includes(w.id) && 'bg-lime/[0.04]')}>
-                      <span className={cx('w-4 h-4 rounded border grid place-items-center', sel.includes(w.id) ? 'bg-lime border-lime' : 'border-ink-500')}>
+                    <button key={w.id} onClick={() => toggle(w.id)} className={cx('w-full flex items-center gap-3 px-3 py-2 text-left hover:bg-ink-850', sel.includes(w.id) && 'bg-accent/[0.04]')}>
+                      <span className={cx('w-4 h-4 rounded border grid place-items-center', sel.includes(w.id) ? 'bg-accent border-accent' : 'border-ink-500')}>
                         {sel.includes(w.id) && <Check size={11} className="text-ink-950" strokeWidth={3} />}
                       </span>
                       <span className="text-sm flex-1">{w.label}</span>

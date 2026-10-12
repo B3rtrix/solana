@@ -14,12 +14,12 @@ function PseudoQr({ seed }: { seed: string }) {
   const cells: [number, number][] = []
   for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (!finder(x, y) && rnd() > 0.5) cells.push([x, y])
   return (
-    <svg viewBox={`-1 -1 ${n + 2} ${n + 2}`} className="w-40 h-40 rounded-lg bg-white">
-      {cells.map(([x, y]) => <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill="#0d0f10" />)}
+    <svg viewBox={`-1 -1 ${n + 2} ${n + 2}`} className="w-40 h-40 rounded-md bg-[#ededed]">
+      {cells.map(([x, y]) => <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill="#0a0a0a" />)}
       {[[0, 0], [n - 7, 0], [0, n - 7]].map(([x, y]) => (
         <g key={`${x}${y}`}>
-          <rect x={x + 0.5} y={y + 0.5} width="6" height="6" fill="none" stroke="#0d0f10" />
-          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#0d0f10" />
+          <rect x={x + 0.5} y={y + 0.5} width="6" height="6" fill="none" stroke="#0a0a0a" />
+          <rect x={x + 2} y={y + 2} width="3" height="3" fill="#0a0a0a" />
         </g>
       ))}
     </svg>
@@ -112,10 +112,10 @@ export function FunderCard() {
   const [dep, setDep] = useState(false)
   const [wd, setWd] = useState(false)
   return (
-    <div className="rounded-xl border border-ink-700 bg-gradient-to-b from-ink-800 to-ink-850 p-3">
+    <div className="rounded-lg border border-ink-750 bg-ink-900 p-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-xs text-ink-300">
-          <WalletIcon size={14} className="text-lime" /> Funder
+          <WalletIcon size={13} className="text-ink-400" /> <span className="label">Funder</span>
         </div>
         <CopyAddr address={funder.address} className="text-[11px]" />
       </div>

@@ -15,8 +15,8 @@ function Tip({ active, payload }: { active?: boolean; payload?: { payload: PnlPo
   if (!active || !payload?.length) return null
   const p = payload[0].payload
   return (
-    <div className="rounded-lg border border-ink-700 bg-ink-850/95 px-3 py-2 shadow-xl">
-      <div className="text-[11px] text-ink-400">
+    <div className="rounded-md border border-ink-700 bg-ink-900 px-3 py-2 shadow-xl">
+      <div className="text-[11px] text-ink-400 font-mono">
         {new Date(p.t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
       </div>
       <div className={`num text-sm font-semibold ${p.v >= 0 ? 'text-up' : 'text-down'}`}>{fmtUsd(p.v, false)}</div>
@@ -26,15 +26,14 @@ function Tip({ active, payload }: { active?: boolean; payload?: { payload: PnlPo
 
 export function PnlChart({ data, height = 280 }: { data: PnlPoint[]; height?: number }) {
   const pts = smooth(data)
-  const positive = (pts[pts.length - 1]?.v ?? 0) >= (pts[0]?.v ?? 0)
-  const color = positive ? '#3ddc97' : '#ff5c6c'
+  const color = '#ededed'
   const spanDays = pts.length ? (pts[pts.length - 1].t - pts[0].t) / 86400_000 : 0
   return (
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={pts} margin={{ top: 10, right: 4, left: 4, bottom: 0 }}>
         <defs>
           <linearGradient id="pnlFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity={0.28} />
+            <stop offset="0%" stopColor={color} stopOpacity={0.14} />
             <stop offset="100%" stopColor={color} stopOpacity={0} />
           </linearGradient>
         </defs>
@@ -45,7 +44,7 @@ export function PnlChart({ data, height = 280 }: { data: PnlPoint[]; height?: nu
           tickFormatter={(t) =>
             new Date(t).toLocaleDateString('en-US', spanDays > 60 ? { month: 'short' } : { month: 'short', day: 'numeric' })
           }
-          tick={{ fill: '#6e767d', fontSize: 11 }}
+          tick={{ fill: '#666', fontSize: 11, fontFamily: 'Geist Mono' }}
           axisLine={false}
           tickLine={false}
           minTickGap={40}
@@ -53,21 +52,21 @@ export function PnlChart({ data, height = 280 }: { data: PnlPoint[]; height?: nu
         <YAxis
           orientation="right"
           tickFormatter={(v) => fmtUsd(v)}
-          tick={{ fill: '#6e767d', fontSize: 11 }}
+          tick={{ fill: '#666', fontSize: 11, fontFamily: 'Geist Mono' }}
           axisLine={false}
           tickLine={false}
           width={64}
           domain={['auto', 'auto']}
         />
-        <Tooltip content={<Tip />} cursor={{ stroke: '#4a5157', strokeDasharray: '3 3' }} />
+        <Tooltip content={<Tip />} cursor={{ stroke: '#444', strokeDasharray: '3 3' }} />
         <Area
           type="monotone"
           dataKey="v"
           stroke={color}
-          strokeWidth={2.25}
+          strokeWidth={1.75}
           fill="url(#pnlFill)"
           dot={false}
-          activeDot={{ r: 4, fill: color, stroke: '#0d0f10', strokeWidth: 2 }}
+          activeDot={{ r: 4, fill: color, stroke: '#0a0a0a', strokeWidth: 2 }}
           isAnimationActive={false}
         />
       </AreaChart>

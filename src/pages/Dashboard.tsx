@@ -129,7 +129,7 @@ export default function Dashboard() {
                         </div>
                       </td>
                       <td>
-                        <span className={cx('chip', l.status === 'live' ? 'bg-up/10 text-up' : 'bg-ink-750 text-ink-300')}>
+                        <span className={cx('chip', l.status === 'live' ? 'border border-ink-700 text-ink-200' : 'border border-dashed border-ink-700 text-ink-400')}>
                           {l.status === 'live' ? 'Live' : 'Draft'}
                         </span>
                       </td>
@@ -151,7 +151,7 @@ export default function Dashboard() {
         <div className="panel">
           <div className="flex items-center justify-between px-5 py-4 border-b border-ink-750">
             <h2 className="font-medium">Tracked wallets</h2>
-            <Link to="/tracker" className="text-xs text-lime hover:underline">View all</Link>
+            <Link to="/tracker" className="text-xs text-accent hover:underline">View all</Link>
           </div>
           <div className="p-2">
             {tracked.slice(0, 6).map((t) => (

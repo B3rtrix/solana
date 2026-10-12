@@ -98,7 +98,7 @@ function TrackedEditor({ open, onClose, initial }: { open: boolean; onClose: () 
                 <button
                   key={e}
                   onClick={() => setEmoji(e)}
-                  className={cx('aspect-square rounded-lg text-lg grid place-items-center border transition', emoji === e ? 'border-lime bg-lime-soft' : 'border-ink-750 bg-ink-850 hover:border-ink-600')}
+                  className={cx('aspect-square rounded-lg text-lg grid place-items-center border transition', emoji === e ? 'border-accent bg-accent-soft' : 'border-ink-750 bg-ink-850 hover:border-ink-600')}
                 >
                   {e}
                 </button>
@@ -107,7 +107,7 @@ function TrackedEditor({ open, onClose, initial }: { open: boolean; onClose: () 
           ) : (
             <button
               onClick={() => fileRef.current?.click()}
-              className="w-full rounded-xl border border-dashed border-ink-600 bg-ink-850 hover:border-lime/50 py-6 flex flex-col items-center gap-2 text-sm text-ink-300"
+              className="w-full rounded-xl border border-dashed border-ink-600 bg-ink-850 hover:border-accent/50 py-6 flex flex-col items-center gap-2 text-sm text-ink-300"
             >
               {image ? <img src={image} className="w-16 h-16 rounded-full object-cover" alt="" /> : <ImagePlus size={22} />}
               {image ? 'Replace picture' : 'Upload a picture'}
@@ -197,7 +197,7 @@ export default function Tracker() {
                     </div>
                     <div className="flex gap-0.5 opacity-60 group-hover:opacity-100">
                       <button title={t.notify ? 'Mute alerts' : 'Enable alerts'} className="btn-quiet p-1.5" onClick={() => updateTracked(t.id, { notify: !t.notify })}>
-                        {t.notify ? <Bell size={14} className="text-lime" /> : <BellOff size={14} />}
+                        {t.notify ? <Bell size={14} className="text-accent" /> : <BellOff size={14} />}
                       </button>
                       <button title="Edit" className="btn-quiet p-1.5" onClick={() => { setEditing(t); setOpen(true) }}><Pencil size={14} /></button>
                       <button title="Remove" className="btn-quiet p-1.5 hover:text-down" onClick={() => removeTracked(t.id)}><Trash2 size={14} /></button>

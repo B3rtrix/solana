@@ -44,15 +44,15 @@ export function CandleChart({
     if (!el.current) return
     const c = createChart(el.current, {
       autoSize: true,
-      layout: { background: { type: ColorType.Solid, color: 'transparent' }, textColor: '#6e767d', fontFamily: 'Inter', attributionLogo: false },
-      grid: { vertLines: { color: 'rgba(255,255,255,0.03)' }, horzLines: { color: 'rgba(255,255,255,0.03)' } },
+      layout: { background: { type: ColorType.Solid, color: 'transparent' }, textColor: '#666', fontFamily: 'Geist Mono', attributionLogo: false },
+      grid: { vertLines: { color: 'rgba(255,255,255,0.035)' }, horzLines: { color: 'rgba(255,255,255,0.035)' } },
       rightPriceScale: { borderVisible: false, scaleMargins: { top: 0.12, bottom: 0.22 } },
       timeScale: { borderVisible: false, timeVisible: true, secondsVisible: true, rightOffset: 6, barSpacing: 9 },
-      crosshair: { mode: CrosshairMode.Normal, vertLine: { color: '#4a5157', labelBackgroundColor: '#22262a' }, horzLine: { color: '#4a5157', labelBackgroundColor: '#22262a' } },
+      crosshair: { mode: CrosshairMode.Normal, vertLine: { color: '#444', labelBackgroundColor: '#262626' }, horzLine: { color: '#444', labelBackgroundColor: '#262626' } },
       localization: { locale: 'en-US', priceFormatter: (p: number) => fmtUsd(p) },
     })
     const s = c.addSeries(CandlestickSeries, {
-      upColor: '#3ddc97', downColor: '#ff5c6c', borderVisible: false, wickUpColor: '#3ddc97', wickDownColor: '#ff5c6c',
+      upColor: '#5bb98c', downColor: '#e5636a', borderVisible: false, wickUpColor: '#5bb98c', wickDownColor: '#e5636a',
       priceFormat: { type: 'custom', formatter: (p: number) => fmtUsd(p), minMove: 0.01 },
     })
     const v = c.addSeries(HistogramSeries, { priceScaleId: 'vol', priceFormat: { type: 'volume' }, lastValueVisible: false, priceLineVisible: false })
@@ -71,7 +71,7 @@ export function CandleChart({
     if (!series.current || !vol.current) return
     series.current.setData(data.map((c) => ({ time: c.time as UTCTimestamp, open: c.open, high: c.high, low: c.low, close: c.close })))
     vol.current.setData(
-      data.map((c) => ({ time: c.time as UTCTimestamp, value: c.volume, color: c.close >= c.open ? 'rgba(61,220,151,0.25)' : 'rgba(255,92,108,0.25)' })),
+      data.map((c) => ({ time: c.time as UTCTimestamp, value: c.volume, color: c.close >= c.open ? 'rgba(255,255,255,0.10)' : 'rgba(255,255,255,0.06)' })),
     )
   }, [data])
 
@@ -96,7 +96,7 @@ export function CandleChart({
       .map((t) => ({
         time: t.time as UTCTimestamp,
         position: t.side === 'buy' ? 'belowBar' : 'aboveBar',
-        color: t.side === 'buy' ? '#3ddc97' : '#ff5c6c',
+        color: t.side === 'buy' ? '#5bb98c' : '#e5636a',
         shape: 'circle',
         text: `${t.side === 'buy' ? 'B' : 'S'}${t.n > 1 ? `×${t.n}` : ''}`,
         size: 1,
@@ -109,8 +109,8 @@ export function CandleChart({
     if (!s) return
     lines.current.forEach((l) => s.removePriceLine(l))
     lines.current = []
-    if (avgBuy) lines.current.push(s.createPriceLine({ price: avgBuy, color: '#3ddc97', lineStyle: LineStyle.Dashed, lineWidth: 1, title: 'Avg buy' }))
-    if (avgSell) lines.current.push(s.createPriceLine({ price: avgSell, color: '#ff5c6c', lineStyle: LineStyle.Dashed, lineWidth: 1, title: 'Avg sell' }))
+    if (avgBuy) lines.current.push(s.createPriceLine({ price: avgBuy, color: '#5bb98c', lineStyle: LineStyle.Dashed, lineWidth: 1, title: 'Avg buy' }))
+    if (avgSell) lines.current.push(s.createPriceLine({ price: avgSell, color: '#e5636a', lineStyle: LineStyle.Dashed, lineWidth: 1, title: 'Avg sell' }))
   }, [avgBuy, avgSell])
 
   return <div ref={el} className="w-full h-full" />

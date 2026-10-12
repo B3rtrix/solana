@@ -336,7 +336,7 @@ export const useStore = create<State>()(
       },
     }),
     {
-      name: 'kiln-v1',
+      name: 'kiln-v2',
       partialize: (s) => {
         const { toasts: _t, ...rest } = s
         return rest
