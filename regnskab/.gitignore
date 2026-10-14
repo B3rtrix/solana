@@ -1,0 +1,4 @@
+config.json
+data/
+*.xlsx
+__pycache__/

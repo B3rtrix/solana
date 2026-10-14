@@ -1,0 +1,19 @@
+{
+  "periode": { "fra": "2025-01-01", "til": "2025-12-31" },
+
+  "wallets": [
+    { "adresse": "DIN_DEV_WALLET_ADRESSE", "navn": "Dev" },
+    { "adresse": "KØBS_WALLET_1", "navn": "Bundle 1" },
+    { "adresse": "KØBS_WALLET_2", "navn": "Bundle 2" }
+  ],
+
+  "proxima": {
+    "koebsgebyr": 0.05,
+    "salgsgebyr": 0.05,
+    "gebyr_wallets": []
+  },
+
+  "navne": {
+    "TOKEN_MINT_ADRESSE": "MITTOKEN"
+  }
+}
